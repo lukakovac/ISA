@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ISA.Models
+namespace ISA.DataAccess.Models
 {
-    class Seat
+    public class Entity
     {
+
     }
 }
