@@ -5,8 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Helpers\" />
     <Folder Include="Extensions\" />
+    <Folder Include="Helpers\" />
   </ItemGroup>
 
 </Project>
