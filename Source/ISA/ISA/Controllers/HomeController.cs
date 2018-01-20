@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using ISA.Models.AccountViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using ISA.Models;
 
 namespace ISA.Controllers
 {
@@ -15,6 +11,7 @@ namespace ISA.Controllers
             return View();
         }
 
+        [Authorize]
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";
@@ -31,7 +28,13 @@ namespace ISA.Controllers
 
         public IActionResult Error()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View();
+        }
+
+        private void TestMethod(LoginViewModel vm)
+        {
+            vm.Email = "Some random email";
+            vm.Password = "hehehehe";
         }
     }
 }

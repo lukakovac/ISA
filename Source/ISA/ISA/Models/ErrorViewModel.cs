@@ -1,5 +1,3 @@
-using System;
-
 namespace ISA.Models
 {
     public class ErrorViewModel
