@@ -15,6 +15,27 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
+    "Nemanja Ristic": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "NemanjaRistic"
+      }
+    },
+    "Luka Kovac": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "LukaKovac"
+      }
+    },
+    "Dusan Nikolic": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "DusanNikolic"
+      }
+    },
     "ISA": {
       "commandName": "Project",
       "launchBrowser": true,
