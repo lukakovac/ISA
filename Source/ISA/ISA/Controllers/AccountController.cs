@@ -24,7 +24,6 @@ namespace ISA.Controllers
         private readonly IEmailService _emailSender;
         private readonly ISmsSender _smsSender;
         private readonly ILogger _logger;
-        private readonly string _externalCookieScheme;
         private readonly IConfiguration _configuration;
 
         private string AdminMail => _configuration.GetSection("Email").GetValue<string>("AdminMail")?.ToString();
