@@ -77,24 +77,21 @@ namespace ISA
 
             // Add application services.
             services.AddSingleton<IEmailConfiguration>(Configuration.GetSection("EmailConfiguration").Get<EmailConfiguration>());
-            
+
             services.AddTransient<IEmailService, EmailService>();
             services.AddTransient<ISmsSender, SmsSender>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(
-            IApplicationBuilder app, 
-            IHostingEnvironment env, 
+            IApplicationBuilder app,
+            IHostingEnvironment env,
             ILoggerFactory loggerFactory,
-            ApplicationDbContext dbContext,
             UserManager<ApplicationUser> userManager,
             RoleManager<IdentityRole> roleManager)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
-
-            app.UseAuthentication();
 
             ApplicationDataInitializer.SeedData(userManager, roleManager);
 
@@ -109,6 +106,7 @@ namespace ISA
             }
 
             app.UseStaticFiles();
+            app.UseAuthentication();
 
             app.UseMvc(routes =>
             {

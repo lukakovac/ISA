@@ -1,0 +1,143 @@
+2018-01-24 01:49:32.0583 Info Message Template Auto Format enabled
+2018-01-24 01:49:32.6155 Info Adding target AsyncWrapper Target[allfile](File Target[allfile_wrapped])
+2018-01-24 01:49:32.6796 Info Adding target AsyncWrapper Target[ownFile-web](File Target[ownFile-web_wrapped])
+2018-01-24 01:49:32.6796 Info Adding target AsyncWrapper Target[blackhole](Null Target[blackhole_wrapped])
+2018-01-24 01:49:32.7039 Info Configured from an XML element in NLog.config...
+2018-01-24 01:49:32.8443 Info Found 59 configuration items
+2018-01-24 01:49:32.9053 Info Found 59 configuration items
+2018-01-24 01:49:34.6644 Info Message Template Auto Format enabled
+2018-01-24 01:49:34.6644 Info Found 59 configuration items
+2018-01-24 01:49:34.6644 Info Adding target AsyncWrapper Target[allfile](File Target[allfile_wrapped])
+2018-01-24 01:49:34.6644 Info Adding target AsyncWrapper Target[ownFile-web](File Target[ownFile-web_wrapped])
+2018-01-24 01:49:34.6644 Info Adding target AsyncWrapper Target[blackhole](Null Target[blackhole_wrapped])
+2018-01-24 01:49:34.6644 Info Configured from an XML element in NLog.config...
+2018-01-24 01:52:10.6590 Info Message Template Auto Format enabled
+2018-01-24 01:52:10.8515 Info Adding target AsyncWrapper Target[allfile](File Target[allfile_wrapped])
+2018-01-24 01:52:10.8711 Info Adding target AsyncWrapper Target[ownFile-web](File Target[ownFile-web_wrapped])
+2018-01-24 01:52:10.8711 Info Adding target AsyncWrapper Target[blackhole](Null Target[blackhole_wrapped])
+2018-01-24 01:52:10.8813 Info Configured from an XML element in NLog.config...
+2018-01-24 01:52:10.9263 Info Found 59 configuration items
+2018-01-24 01:52:10.9493 Info Found 59 configuration items
+2018-01-24 01:52:12.7642 Info Message Template Auto Format enabled
+2018-01-24 01:52:12.7642 Info Found 59 configuration items
+2018-01-24 01:52:12.7693 Info Adding target AsyncWrapper Target[allfile](File Target[allfile_wrapped])
+2018-01-24 01:52:12.7693 Info Adding target AsyncWrapper Target[ownFile-web](File Target[ownFile-web_wrapped])
+2018-01-24 01:52:12.7693 Info Adding target AsyncWrapper Target[blackhole](Null Target[blackhole_wrapped])
+2018-01-24 01:52:12.7693 Info Configured from an XML element in NLog.config...
+2018-01-24 01:52:24.2209 Info Message Template Auto Format enabled
+2018-01-24 01:52:24.3431 Info Adding target AsyncWrapper Target[allfile](File Target[allfile_wrapped])
+2018-01-24 01:52:24.3467 Info Adding target AsyncWrapper Target[ownFile-web](File Target[ownFile-web_wrapped])
+2018-01-24 01:52:24.3467 Info Adding target AsyncWrapper Target[blackhole](Null Target[blackhole_wrapped])
+2018-01-24 01:52:24.3467 Info Configured from an XML element in NLog.config...
+2018-01-24 01:52:24.3783 Info Found 59 configuration items
+2018-01-24 01:52:24.3974 Info Found 59 configuration items
+2018-01-24 01:52:24.7700 Info Message Template Auto Format enabled
+2018-01-24 01:52:24.7700 Info Found 59 configuration items
+2018-01-24 01:52:24.7700 Info Adding target AsyncWrapper Target[allfile](File Target[allfile_wrapped])
+2018-01-24 01:52:24.7700 Info Adding target AsyncWrapper Target[ownFile-web](File Target[ownFile-web_wrapped])
+2018-01-24 01:52:24.7700 Info Adding target AsyncWrapper Target[blackhole](Null Target[blackhole_wrapped])
+2018-01-24 01:52:24.7700 Info Configured from an XML element in NLog.config...
+2018-01-24 01:52:50.1159 Info Message Template Auto Format enabled
+2018-01-24 01:52:50.4919 Info Adding target AsyncWrapper Target[allfile](File Target[allfile_wrapped])
+2018-01-24 01:52:50.5256 Info Adding target AsyncWrapper Target[ownFile-web](File Target[ownFile-web_wrapped])
+2018-01-24 01:52:50.5256 Info Adding target AsyncWrapper Target[blackhole](Null Target[blackhole_wrapped])
+2018-01-24 01:52:50.5383 Info Configured from an XML element in NLog.config...
+2018-01-24 01:52:50.6120 Info Found 59 configuration items
+2018-01-24 01:52:50.6541 Info Found 59 configuration items
+2018-01-24 01:52:52.2401 Info Message Template Auto Format enabled
+2018-01-24 01:52:52.2401 Info Found 59 configuration items
+2018-01-24 01:52:52.2401 Info Adding target AsyncWrapper Target[allfile](File Target[allfile_wrapped])
+2018-01-24 01:52:52.2401 Info Adding target AsyncWrapper Target[ownFile-web](File Target[ownFile-web_wrapped])
+2018-01-24 01:52:52.2401 Info Adding target AsyncWrapper Target[blackhole](Null Target[blackhole_wrapped])
+2018-01-24 01:52:52.2401 Info Configured from an XML element in NLog.config...
+2018-01-24 01:58:19.0909 Info Message Template Auto Format enabled
+2018-01-24 01:58:19.4753 Info Adding target AsyncWrapper Target[allfile](File Target[allfile_wrapped])
+2018-01-24 01:58:19.5533 Info Adding target AsyncWrapper Target[ownFile-web](File Target[ownFile-web_wrapped])
+2018-01-24 01:58:19.5533 Info Adding target AsyncWrapper Target[blackhole](Null Target[blackhole_wrapped])
+2018-01-24 01:58:19.5533 Info Configured from an XML element in NLog.config...
+2018-01-24 01:58:19.6291 Info Found 59 configuration items
+2018-01-24 01:58:19.6621 Info Found 59 configuration items
+2018-01-24 01:58:21.5377 Info Message Template Auto Format enabled
+2018-01-24 01:58:21.5377 Info Found 59 configuration items
+2018-01-24 01:58:21.5377 Info Adding target AsyncWrapper Target[allfile](File Target[allfile_wrapped])
+2018-01-24 01:58:21.5377 Info Adding target AsyncWrapper Target[ownFile-web](File Target[ownFile-web_wrapped])
+2018-01-24 01:58:21.5377 Info Adding target AsyncWrapper Target[blackhole](Null Target[blackhole_wrapped])
+2018-01-24 01:58:21.5377 Info Configured from an XML element in NLog.config...
+2018-01-24 02:02:16.1510 Info Message Template Auto Format enabled
+2018-01-24 02:02:16.6367 Info Adding target AsyncWrapper Target[allfile](File Target[allfile_wrapped])
+2018-01-24 02:02:16.7801 Info Adding target AsyncWrapper Target[ownFile-web](File Target[ownFile-web_wrapped])
+2018-01-24 02:02:16.7801 Info Adding target AsyncWrapper Target[blackhole](Null Target[blackhole_wrapped])
+2018-01-24 02:02:16.7994 Info Configured from an XML element in NLog.config...
+2018-01-24 02:02:16.8918 Info Found 59 configuration items
+2018-01-24 02:02:16.9321 Info Found 59 configuration items
+2018-01-24 02:02:18.6183 Info Message Template Auto Format enabled
+2018-01-24 02:02:18.6183 Info Found 59 configuration items
+2018-01-24 02:02:18.6183 Info Adding target AsyncWrapper Target[allfile](File Target[allfile_wrapped])
+2018-01-24 02:02:18.6183 Info Adding target AsyncWrapper Target[ownFile-web](File Target[ownFile-web_wrapped])
+2018-01-24 02:02:18.6183 Info Adding target AsyncWrapper Target[blackhole](Null Target[blackhole_wrapped])
+2018-01-24 02:02:18.6183 Info Configured from an XML element in NLog.config...
+2018-01-24 02:02:47.9241 Info Message Template Auto Format enabled
+2018-01-24 02:02:48.2875 Info Adding target AsyncWrapper Target[allfile](File Target[allfile_wrapped])
+2018-01-24 02:02:48.3591 Info Adding target AsyncWrapper Target[ownFile-web](File Target[ownFile-web_wrapped])
+2018-01-24 02:02:48.3635 Info Adding target AsyncWrapper Target[blackhole](Null Target[blackhole_wrapped])
+2018-01-24 02:02:48.3635 Info Configured from an XML element in NLog.config...
+2018-01-24 02:02:48.4462 Info Found 59 configuration items
+2018-01-24 02:02:48.4742 Info Found 59 configuration items
+2018-01-24 02:02:50.2891 Info Message Template Auto Format enabled
+2018-01-24 02:02:50.2891 Info Found 59 configuration items
+2018-01-24 02:02:50.2891 Info Adding target AsyncWrapper Target[allfile](File Target[allfile_wrapped])
+2018-01-24 02:02:50.2891 Info Adding target AsyncWrapper Target[ownFile-web](File Target[ownFile-web_wrapped])
+2018-01-24 02:02:50.2891 Info Adding target AsyncWrapper Target[blackhole](Null Target[blackhole_wrapped])
+2018-01-24 02:02:50.2891 Info Configured from an XML element in NLog.config...
+2018-01-24 02:49:09.6726 Info Message Template Auto Format enabled
+2018-01-24 02:49:09.9812 Info Adding target AsyncWrapper Target[allfile](File Target[allfile_wrapped])
+2018-01-24 02:49:10.0312 Info Adding target AsyncWrapper Target[ownFile-web](File Target[ownFile-web_wrapped])
+2018-01-24 02:49:10.0312 Info Adding target AsyncWrapper Target[blackhole](Null Target[blackhole_wrapped])
+2018-01-24 02:49:10.0609 Info Configured from an XML element in NLog.config...
+2018-01-24 02:49:10.1474 Info Found 59 configuration items
+2018-01-24 02:49:10.1885 Info Found 59 configuration items
+2018-01-24 02:49:11.7758 Info Message Template Auto Format enabled
+2018-01-24 02:49:11.7758 Info Found 59 configuration items
+2018-01-24 02:49:11.7758 Info Adding target AsyncWrapper Target[allfile](File Target[allfile_wrapped])
+2018-01-24 02:49:11.7758 Info Adding target AsyncWrapper Target[ownFile-web](File Target[ownFile-web_wrapped])
+2018-01-24 02:49:11.7758 Info Adding target AsyncWrapper Target[blackhole](Null Target[blackhole_wrapped])
+2018-01-24 02:49:11.7758 Info Configured from an XML element in NLog.config...
+2018-01-24 02:54:04.1459 Info Message Template Auto Format enabled
+2018-01-24 02:54:04.4544 Info Adding target AsyncWrapper Target[allfile](File Target[allfile_wrapped])
+2018-01-24 02:54:04.5072 Info Adding target AsyncWrapper Target[ownFile-web](File Target[ownFile-web_wrapped])
+2018-01-24 02:54:04.5072 Info Adding target AsyncWrapper Target[blackhole](Null Target[blackhole_wrapped])
+2018-01-24 02:54:04.5207 Info Configured from an XML element in NLog.config...
+2018-01-24 02:54:04.7585 Info Found 59 configuration items
+2018-01-24 02:54:04.7849 Info Found 59 configuration items
+2018-01-24 02:54:06.5258 Info Message Template Auto Format enabled
+2018-01-24 02:54:06.5258 Info Found 59 configuration items
+2018-01-24 02:54:06.5258 Info Adding target AsyncWrapper Target[allfile](File Target[allfile_wrapped])
+2018-01-24 02:54:06.5258 Info Adding target AsyncWrapper Target[ownFile-web](File Target[ownFile-web_wrapped])
+2018-01-24 02:54:06.5258 Info Adding target AsyncWrapper Target[blackhole](Null Target[blackhole_wrapped])
+2018-01-24 02:54:06.5258 Info Configured from an XML element in NLog.config...
+2018-01-24 02:54:35.8483 Info Message Template Auto Format enabled
+2018-01-24 02:54:35.9618 Info Adding target AsyncWrapper Target[allfile](File Target[allfile_wrapped])
+2018-01-24 02:54:35.9618 Info Adding target AsyncWrapper Target[ownFile-web](File Target[ownFile-web_wrapped])
+2018-01-24 02:54:35.9618 Info Adding target AsyncWrapper Target[blackhole](Null Target[blackhole_wrapped])
+2018-01-24 02:54:35.9771 Info Configured from an XML element in NLog.config...
+2018-01-24 02:54:36.0091 Info Found 59 configuration items
+2018-01-24 02:54:36.0440 Info Found 59 configuration items
+2018-01-24 02:54:36.4174 Info Message Template Auto Format enabled
+2018-01-24 02:54:36.4174 Info Found 59 configuration items
+2018-01-24 02:54:36.4174 Info Adding target AsyncWrapper Target[allfile](File Target[allfile_wrapped])
+2018-01-24 02:54:36.4174 Info Adding target AsyncWrapper Target[ownFile-web](File Target[ownFile-web_wrapped])
+2018-01-24 02:54:36.4174 Info Adding target AsyncWrapper Target[blackhole](Null Target[blackhole_wrapped])
+2018-01-24 02:54:36.4174 Info Configured from an XML element in NLog.config...
+2018-01-24 02:55:52.8193 Info Message Template Auto Format enabled
+2018-01-24 02:55:53.1573 Info Adding target AsyncWrapper Target[allfile](File Target[allfile_wrapped])
+2018-01-24 02:55:53.2023 Info Adding target AsyncWrapper Target[ownFile-web](File Target[ownFile-web_wrapped])
+2018-01-24 02:55:53.2023 Info Adding target AsyncWrapper Target[blackhole](Null Target[blackhole_wrapped])
+2018-01-24 02:55:53.2133 Info Configured from an XML element in NLog.config...
+2018-01-24 02:55:53.2848 Info Found 59 configuration items
+2018-01-24 02:55:53.3396 Info Found 59 configuration items
+2018-01-24 02:55:55.0701 Info Message Template Auto Format enabled
+2018-01-24 02:55:55.0701 Info Found 59 configuration items
+2018-01-24 02:55:55.0701 Info Adding target AsyncWrapper Target[allfile](File Target[allfile_wrapped])
+2018-01-24 02:55:55.0701 Info Adding target AsyncWrapper Target[ownFile-web](File Target[ownFile-web_wrapped])
+2018-01-24 02:55:55.0701 Info Adding target AsyncWrapper Target[blackhole](Null Target[blackhole_wrapped])
+2018-01-24 02:55:55.0701 Info Configured from an XML element in NLog.config...

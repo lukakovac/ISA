@@ -13,7 +13,7 @@ namespace ISA.Data
     /// </summary>
     public class ApplicationDataInitializer
     {
-        protected static string[] SYSTEM_ROLES = new [] { "User", "SuperAdmin", "FunZoneAdmin", "MovieAdmin" };
+        protected static string[] SYSTEM_ROLES = new[] { "User", "SuperAdmin", "FunZoneAdmin", "MovieAdmin" };
 
 
         /// <summary>
@@ -38,22 +38,28 @@ namespace ISA.Data
         {
             foreach (var u in SYSTEM_ROLES)
             {
-                var username = $"{u.ToLower()}@test.mail";
-                var pw = string.Join(string.Empty, char.ToUpper(username[0]), username.Substring(1));
+                var username = $"{u.ToLower()}";
+                var email = $"{username}@test.mail";
+                var pw = $"{char.ToUpper(username[0])}{username.Substring(1)}2018!";
 
-                if (userManager.FindByNameAsync(username).Result == null)
+                if (userManager.FindByNameAsync(email).Result == null)
                 {
                     ApplicationUser user = new ApplicationUser
                     {
-                        UserName = username,
-                        Email = username,
+                        UserName = email,
+                        Email = email,
                     };
 
                     IdentityResult result = userManager.CreateAsync(user, pw).Result;
 
                     if (result.Succeeded)
                     {
+                        //add roles to user
                         userManager.AddToRoleAsync(user, u).Wait();
+                        //get activation code
+                        var code = userManager.GenerateEmailConfirmationTokenAsync(user).Result;
+                        //activate user
+                        userManager.ConfirmEmailAsync(user, code).Wait();
                     }
                 }
             }
