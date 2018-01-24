@@ -33,7 +33,10 @@ namespace ISA
         {
             // Add framework services.
             services.AddMvc();
-            services.AddDbContext<ISAContext>(cfg => cfg.UseSqlServer(Configuration.GetConnectionString("IsaConnectionString")));
+            services.AddDbContext<ISAContext>(cfg =>
+            {
+                cfg.UseSqlServer(Configuration.GetConnectionString("IsaConnectionString"));
+            });
 
             services.AddDbContext<ApplicationDbContext>(options =>
         options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
@@ -80,10 +83,20 @@ namespace ISA
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(
+            IApplicationBuilder app, 
+            IHostingEnvironment env, 
+            ILoggerFactory loggerFactory,
+            ApplicationDbContext dbContext,
+            UserManager<ApplicationUser> userManager,
+            RoleManager<IdentityRole> roleManager)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
+
+            app.UseAuthentication();
+
+            ApplicationDataInitializer.SeedData(userManager, roleManager);
 
             if (env.IsDevelopment())
             {
