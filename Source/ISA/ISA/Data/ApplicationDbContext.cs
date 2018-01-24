@@ -9,6 +9,7 @@ namespace ISA.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
+            this.Database.EnsureCreated();
         }
 
         protected override void OnModelCreating(ModelBuilder builder)

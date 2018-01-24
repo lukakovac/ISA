@@ -24,7 +24,6 @@ namespace ISA.Controllers
         private readonly IEmailService _emailSender;
         private readonly ISmsSender _smsSender;
         private readonly ILogger _logger;
-        private readonly string _externalCookieScheme;
         private readonly IConfiguration _configuration;
 
         private string AdminMail => _configuration.GetSection("AppSettings").GetValue<string>("AdminMail")?.ToString();
@@ -131,8 +130,11 @@ namespace ISA.Controllers
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
 
                 // ONLY FOR TESTING PURPOSE!!! MADE BY LUKA
-                var userToDelete = _userManager.Users.First();
-                await _userManager.DeleteAsync(userToDelete);
+                var userToDelete = _userManager.Users.FirstOrDefault();
+                if (!(userToDelete is null))
+                {
+                    await _userManager.DeleteAsync(userToDelete);
+                }
 
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)

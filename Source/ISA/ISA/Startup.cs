@@ -33,7 +33,10 @@ namespace ISA
         {
             // Add framework services.
             services.AddMvc();
-            services.AddDbContext<ISAContext>(cfg => cfg.UseSqlServer(Configuration.GetConnectionString("IsaConnectionString")));
+            services.AddDbContext<ISAContext>(cfg =>
+            {
+                cfg.UseSqlServer(Configuration.GetConnectionString("IsaConnectionString"));
+            });
 
             services.AddDbContext<ApplicationDbContext>(options =>
         options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
@@ -74,16 +77,23 @@ namespace ISA
 
             // Add application services.
             services.AddSingleton<IEmailConfiguration>(Configuration.GetSection("EmailConfiguration").Get<EmailConfiguration>());
-            
+
             services.AddTransient<IEmailService, EmailService>();
             services.AddTransient<ISmsSender, SmsSender>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(
+            IApplicationBuilder app,
+            IHostingEnvironment env,
+            ILoggerFactory loggerFactory,
+            UserManager<ApplicationUser> userManager,
+            RoleManager<IdentityRole> roleManager)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
+
+            ApplicationDataInitializer.SeedData(userManager, roleManager);
 
             if (env.IsDevelopment())
             {
@@ -96,6 +106,7 @@ namespace ISA
             }
 
             app.UseStaticFiles();
+            app.UseAuthentication();
 
             app.UseMvc(routes =>
             {
