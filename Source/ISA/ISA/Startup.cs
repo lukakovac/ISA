@@ -35,8 +35,7 @@ namespace ISA
             services.AddMvc();
             services.AddDbContext<ISAContext>(cfg => cfg.UseSqlServer(Configuration.GetConnectionString("IsaConnectionString")));
 
-            services.AddDbContext<ApplicationDbContext>(options =>
-        options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()

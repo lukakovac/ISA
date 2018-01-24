@@ -11,7 +11,7 @@ namespace ISA.DataAccess.Context
         public ISAContext(DbContextOptions<ISAContext> options) :
             base(options)
         {
-            Database.EnsureCreated();
+            var isCreated = Database.EnsureCreated();
         }
 
         public DbSet<Cinema> Cinemas { get; set; }

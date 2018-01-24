@@ -18,6 +18,8 @@
                         <span class="icon-bar"></span>
                     </button>
                     <a asp-controller="Home" asp-action="Index" class="navbar-brand">Identity Sample</a>
+                    <if>
+                    <a asp-controller="Cinemas" asp-action="Index" class="navbar-brand">If you are loged in you should see this!</a>
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">

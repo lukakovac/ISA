@@ -40,7 +40,7 @@ namespace ISA.Services.EmailService
             using (var emailClient = new MailKit.Net.Smtp.SmtpClient())
             {
                 //The last parameter here is to use SSL (Which you should!)
-                emailClient.Connect(_emailConfiguration.SmtpServer, _emailConfiguration.SmtpPort, true);
+                emailClient.Connect(_emailConfiguration.SmtpServer, _emailConfiguration.SmtpPort, MailKit.Security.SecureSocketOptions.SslOnConnect);
 
                 //Remove any OAuth functionality as we won't be using it. 
                 emailClient.AuthenticationMechanisms.Remove("XOAUTH2");
