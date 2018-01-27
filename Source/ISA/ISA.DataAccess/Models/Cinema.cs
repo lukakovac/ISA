@@ -1,5 +1,7 @@
 ﻿using ISA.Common.Extensions;
 using ISA.DataAccess.Models.Enumerations;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ISA.DataAccess.Models
@@ -24,9 +26,16 @@ namespace ISA.DataAccess.Models
 
         //public virtual List<ProjectionHall> ProjectionHalls { get; set; }
 
-        //public virtual List<Repertoire> Repertoires { get; set; }
+        public virtual List<Repertoire> Repertoires { get; set; }
     }
 
     public class ProjectionHall { }
-    public class Repertoire { }
+
+    public class Repertoire : BaseEntity<int>
+    {
+        public DateTime? StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
+
+        public List<Projection> Projections { get; set; }
+    }
 }

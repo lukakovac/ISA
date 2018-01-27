@@ -12,15 +12,14 @@ namespace ISA.DataAccess.Context
         public ISAContext(DbContextOptions<ISAContext> options, IHostingEnvironment env)
             : base(options)
         {
-            if (!env.IsProduction())
-            {
-                Database.EnsureDeleted();
-            }
             Database.EnsureCreated();
         }
 
         //public DbSet<CinemaType> CinemaTypes { get; set; }
 
         public DbSet<Cinema> Cinemas { get; set; }
+        public DbSet<Projection> Projections { get; set; }
+        public DbSet<Repertoire> Repertoires { get; set; }
+
     }
 }

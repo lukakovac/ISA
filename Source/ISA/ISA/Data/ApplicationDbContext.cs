@@ -10,11 +10,7 @@ namespace ISA.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, IHostingEnvironment env)
             : base(options)
         {
-            if (!env.IsProduction())
-            {
-                Database.EnsureDeleted();
-            }
-            this.Database.EnsureCreated();
+            Database.EnsureCreated();
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
