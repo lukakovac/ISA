@@ -9,7 +9,7 @@ namespace ISA.DataAccess.Context
         public ISAContext() : base()
         { }
 
-        public ISAContext(DbContextOptions<ISAContext> options, IHostingEnvironment env)
+        public ISAContext(DbContextOptions<ISAContext> options)
             : base(options)
         {
             Database.EnsureCreated();
