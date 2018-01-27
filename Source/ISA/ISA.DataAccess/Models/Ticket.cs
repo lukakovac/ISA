@@ -1,6 +1,6 @@
 ﻿namespace ISA.DataAccess.Models
 {
-    class Ticket
+    public class Ticket
     {
     }
 }

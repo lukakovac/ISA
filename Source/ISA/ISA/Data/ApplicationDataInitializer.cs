@@ -1,4 +1,5 @@
-﻿using ISA.Models;
+﻿using ISA.DataAccess.Context;
+using ISA.Models;
 using Microsoft.AspNetCore.Identity;
 
 namespace ISA.Data
@@ -27,11 +28,24 @@ namespace ISA.Data
         public static void SeedData
             (
                 UserManager<ApplicationUser> userManager,
-                RoleManager<IdentityRole> roleManager
+                RoleManager<IdentityRole> roleManager,
+                ISAContext context
             )
         {
+            SeedEnumerations(context);
             SeedRoles(roleManager);
             SeedUsers(userManager);
+        }
+
+        private static void SeedEnumerations(ISAContext context)
+        {
+            context.Cinemas.Add(new DataAccess.Models.Cinema
+            {
+                Address = "Address1",
+                Name = "Cinema1",
+                Type = DataAccess.Models.Enumerations.CinemaTypeEnum.Cinema
+            });
+            context.SaveChanges();
         }
 
         public static void SeedUsers(UserManager<ApplicationUser> userManager)

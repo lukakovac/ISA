@@ -4,9 +4,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ISA.DataAccess.Context;
 using ISA.DataAccess.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ISA.Controllers
 {
+    [Authorize]
     public class CinemasController : Controller
     {
         private readonly ISAContext _context;

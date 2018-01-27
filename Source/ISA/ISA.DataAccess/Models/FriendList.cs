@@ -1,6 +1,6 @@
 ﻿namespace ISA.DataAccess.Models
 {
-    class FriendList
+    public class FriendList
     {
     }
 }

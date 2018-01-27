@@ -1,17 +1,32 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using ISA.Common.Extensions;
+using ISA.DataAccess.Models.Enumerations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ISA.DataAccess.Models
 {
-    public class Cinema
-    {
-        [Key]
-        public int Id { get; set; }
-
-        [MaxLength(100)]
+    public class Cinema : BaseEntity<int>
+    {        
         public string Name { get; set; }
 
-        //public IEnumerable<Projection> Projections { get; set; }
+        public string Address { get; set; }
 
-        //public IEnumerable<Seat> Seats { get; set; }
+        #region ENUM PATTERN
+        [Column("Type")]
+        public string TypeString
+        {
+            get => Type.ToString("G");
+            set => Type = value.ParseEnum<CinemaTypeEnum>();
+        }
+
+        [NotMapped]
+        public CinemaTypeEnum Type { get; set; }
+        #endregion
+
+        //public virtual List<ProjectionHall> ProjectionHalls { get; set; }
+
+        //public virtual List<Repertoire> Repertoires { get; set; }
     }
+
+    public class ProjectionHall { }
+    public class Repertoire { }
 }

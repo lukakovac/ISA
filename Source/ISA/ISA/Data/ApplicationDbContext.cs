@@ -1,14 +1,19 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using ISA.Models;
+using Microsoft.AspNetCore.Hosting;
 
 namespace ISA.Data
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, IHostingEnvironment env)
             : base(options)
         {
+            if (!env.IsProduction())
+            {
+                Database.EnsureDeleted();
+            }
             this.Database.EnsureCreated();
         }
 

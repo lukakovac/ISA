@@ -1,6 +1,6 @@
 ﻿namespace ISA.DataAccess.Models
 {
-    class ProjectionType
+    public class ProjectionType
     {
     }
 }
