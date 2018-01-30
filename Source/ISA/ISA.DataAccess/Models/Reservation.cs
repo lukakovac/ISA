@@ -1,6 +1,6 @@
 ﻿namespace ISA.DataAccess.Models
 {
-    class Reservation
+    public class Reservation
     {
     }
 }

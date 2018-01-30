@@ -4,27 +4,25 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ISA.DataAccess.Context;
 using ISA.DataAccess.Models;
-using Microsoft.AspNetCore.Authorization;
 
 namespace ISA.Controllers
 {
-    [Authorize]
-    public class CinemasController : Controller
+    public class ProjectionsController : Controller
     {
         private readonly ISAContext _context;
 
-        public CinemasController(ISAContext context)
+        public ProjectionsController(ISAContext context)
         {
             _context = context;
         }
 
-        // GET: Cinemas
+        // GET: Projections
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Cinemas.ToListAsync());
+            return View(await _context.Projections.ToListAsync());
         }
 
-        // GET: Cinemas/Details/5
+        // GET: Projections/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -32,39 +30,39 @@ namespace ISA.Controllers
                 return NotFound();
             }
 
-            var cinema = await _context.Cinemas
+            var projection = await _context.Projections
                 .SingleOrDefaultAsync(m => m.Id == id);
-            if (cinema == null)
+            if (projection == null)
             {
                 return NotFound();
             }
 
-            return View(cinema);
+            return View(projection);
         }
 
-        // GET: Cinemas/Create
+        // GET: Projections/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Cinemas/Create
+        // POST: Projections/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name")] Cinema cinema)
+        public async Task<IActionResult> Create([Bind("Duration,Name,Description,ProjectionTypeString,Id")] Projection projection)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(cinema);
+                _context.Add(projection);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(cinema);
+            return View(projection);
         }
 
-        // GET: Cinemas/Edit/5
+        // GET: Projections/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -72,22 +70,22 @@ namespace ISA.Controllers
                 return NotFound();
             }
 
-            var cinema = await _context.Cinemas.SingleOrDefaultAsync(m => m.Id == id);
-            if (cinema == null)
+            var projection = await _context.Projections.SingleOrDefaultAsync(m => m.Id == id);
+            if (projection == null)
             {
                 return NotFound();
             }
-            return View(cinema);
+            return View(projection);
         }
 
-        // POST: Cinemas/Edit/5
+        // POST: Projections/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] Cinema cinema)
+        public async Task<IActionResult> Edit(int id, [Bind("Duration,Name,Description,ProjectionTypeString,Id")] Projection projection)
         {
-            if (id != cinema.Id)
+            if (id != projection.Id)
             {
                 return NotFound();
             }
@@ -96,12 +94,12 @@ namespace ISA.Controllers
             {
                 try
                 {
-                    _context.Update(cinema);
+                    _context.Update(projection);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CinemaExists(cinema.Id))
+                    if (!ProjectionExists(projection.Id))
                     {
                         return NotFound();
                     }
@@ -112,10 +110,10 @@ namespace ISA.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(cinema);
+            return View(projection);
         }
 
-        // GET: Cinemas/Delete/5
+        // GET: Projections/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -123,30 +121,30 @@ namespace ISA.Controllers
                 return NotFound();
             }
 
-            var cinema = await _context.Cinemas
+            var projection = await _context.Projections
                 .SingleOrDefaultAsync(m => m.Id == id);
-            if (cinema == null)
+            if (projection == null)
             {
                 return NotFound();
             }
 
-            return View(cinema);
+            return View(projection);
         }
 
-        // POST: Cinemas/Delete/5
+        // POST: Projections/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var cinema = await _context.Cinemas.SingleOrDefaultAsync(m => m.Id == id);
-            _context.Cinemas.Remove(cinema);
+            var projection = await _context.Projections.SingleOrDefaultAsync(m => m.Id == id);
+            _context.Projections.Remove(projection);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CinemaExists(int id)
+        private bool ProjectionExists(int id)
         {
-            return _context.Cinemas.Any(e => e.Id == id);
+            return _context.Projections.Any(e => e.Id == id);
         }
     }
 }

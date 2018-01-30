@@ -6,9 +6,13 @@
 
   <ItemGroup>
     <Compile Remove="Data\Migrations\**" />
+    <Compile Remove="logs\**" />
     <Content Remove="Data\Migrations\**" />
+    <Content Remove="logs\**" />
     <EmbeddedResource Remove="Data\Migrations\**" />
+    <EmbeddedResource Remove="logs\**" />
     <None Remove="Data\Migrations\**" />
+    <None Remove="logs\**" />
   </ItemGroup>
 
   <ItemGroup>

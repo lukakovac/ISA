@@ -4,27 +4,25 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ISA.DataAccess.Context;
 using ISA.DataAccess.Models;
-using Microsoft.AspNetCore.Authorization;
 
 namespace ISA.Controllers
 {
-    [Authorize]
-    public class CinemasController : Controller
+    public class RepertoiresController : Controller
     {
         private readonly ISAContext _context;
 
-        public CinemasController(ISAContext context)
+        public RepertoiresController(ISAContext context)
         {
             _context = context;
         }
 
-        // GET: Cinemas
+        // GET: Repertoires
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Cinemas.ToListAsync());
+            return View(await _context.Repertoires.ToListAsync());
         }
 
-        // GET: Cinemas/Details/5
+        // GET: Repertoires/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -32,39 +30,39 @@ namespace ISA.Controllers
                 return NotFound();
             }
 
-            var cinema = await _context.Cinemas
+            var repertoire = await _context.Repertoires
                 .SingleOrDefaultAsync(m => m.Id == id);
-            if (cinema == null)
+            if (repertoire == null)
             {
                 return NotFound();
             }
 
-            return View(cinema);
+            return View(repertoire);
         }
 
-        // GET: Cinemas/Create
+        // GET: Repertoires/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Cinemas/Create
+        // POST: Repertoires/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name")] Cinema cinema)
+        public async Task<IActionResult> Create([Bind("StartDate,EndDate,Id")] Repertoire repertoire)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(cinema);
+                _context.Add(repertoire);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(cinema);
+            return View(repertoire);
         }
 
-        // GET: Cinemas/Edit/5
+        // GET: Repertoires/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -72,22 +70,22 @@ namespace ISA.Controllers
                 return NotFound();
             }
 
-            var cinema = await _context.Cinemas.SingleOrDefaultAsync(m => m.Id == id);
-            if (cinema == null)
+            var repertoire = await _context.Repertoires.SingleOrDefaultAsync(m => m.Id == id);
+            if (repertoire == null)
             {
                 return NotFound();
             }
-            return View(cinema);
+            return View(repertoire);
         }
 
-        // POST: Cinemas/Edit/5
+        // POST: Repertoires/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] Cinema cinema)
+        public async Task<IActionResult> Edit(int id, [Bind("StartDate,EndDate,Id")] Repertoire repertoire)
         {
-            if (id != cinema.Id)
+            if (id != repertoire.Id)
             {
                 return NotFound();
             }
@@ -96,12 +94,12 @@ namespace ISA.Controllers
             {
                 try
                 {
-                    _context.Update(cinema);
+                    _context.Update(repertoire);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CinemaExists(cinema.Id))
+                    if (!RepertoireExists(repertoire.Id))
                     {
                         return NotFound();
                     }
@@ -112,10 +110,10 @@ namespace ISA.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(cinema);
+            return View(repertoire);
         }
 
-        // GET: Cinemas/Delete/5
+        // GET: Repertoires/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -123,30 +121,30 @@ namespace ISA.Controllers
                 return NotFound();
             }
 
-            var cinema = await _context.Cinemas
+            var repertoire = await _context.Repertoires
                 .SingleOrDefaultAsync(m => m.Id == id);
-            if (cinema == null)
+            if (repertoire == null)
             {
                 return NotFound();
             }
 
-            return View(cinema);
+            return View(repertoire);
         }
 
-        // POST: Cinemas/Delete/5
+        // POST: Repertoires/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var cinema = await _context.Cinemas.SingleOrDefaultAsync(m => m.Id == id);
-            _context.Cinemas.Remove(cinema);
+            var repertoire = await _context.Repertoires.SingleOrDefaultAsync(m => m.Id == id);
+            _context.Repertoires.Remove(repertoire);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CinemaExists(int id)
+        private bool RepertoireExists(int id)
         {
-            return _context.Cinemas.Any(e => e.Id == id);
+            return _context.Repertoires.Any(e => e.Id == id);
         }
     }
 }
