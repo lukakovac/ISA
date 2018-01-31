@@ -9,9 +9,5 @@ namespace ISA.DataAccess.Models
 
         [MaxLength(100)]
         public string Name { get; set; }
-
-        //public IEnumerable<Projection> Projections { get; set; }
-
-        //public IEnumerable<Seat> Seats { get; set; }
     }
 }

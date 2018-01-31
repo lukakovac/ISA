@@ -1,6 +1,7 @@
 ﻿namespace ISA.DataAccess.Models
 {
-    class Theater
+    public class Theater : BaseEntity<int>
     {
+        public string Name { get; set; }
     }
 }

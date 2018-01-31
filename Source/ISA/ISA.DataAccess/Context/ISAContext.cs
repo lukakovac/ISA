@@ -15,5 +15,16 @@ namespace ISA.DataAccess.Context
         }
 
         public DbSet<Cinema> Cinemas { get; set; }
+
+        public DbSet<Bid> Bids { get; set; }
+
+        public DbSet<FunZone> FunZone { get; set; }
+
+        public DbSet<ThematicProps> ThematicProps { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }

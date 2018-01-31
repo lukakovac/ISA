@@ -1,6 +1,6 @@
 ﻿namespace ISA.DataAccess.Models
 {
-    public class Projection
+    public class Projection :BaseEntity<int>
     {
     }
 }
