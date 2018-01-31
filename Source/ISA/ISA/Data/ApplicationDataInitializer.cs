@@ -1,5 +1,9 @@
-﻿using ISA.Models;
+﻿using ISA.DataAccess.Context;
+using ISA.DataAccess.Models;
+using ISA.DataAccess.Models.Enumerations;
+using ISA.Models;
 using Microsoft.AspNetCore.Identity;
+using System.Collections.Generic;
 
 namespace ISA.Data
 {
@@ -27,11 +31,42 @@ namespace ISA.Data
         public static void SeedData
             (
                 UserManager<ApplicationUser> userManager,
-                RoleManager<IdentityRole> roleManager
+                RoleManager<IdentityRole> roleManager,
+                ISAContext context
             )
         {
+            SeedEnumerations(context);
             SeedRoles(roleManager);
             SeedUsers(userManager);
+        }
+
+        private static void SeedEnumerations(ISAContext context)
+        {
+            var projection = new Projection
+            {
+                Description = "desc",
+                Duration = new System.TimeSpan(2, 0, 0),
+                Name = "Projection 1",
+                Type = ProjectionTypeEnum.Movie
+            };
+
+            var rep = new Repertoire
+            {
+                Projections = new List<Projection> { projection }
+            };
+
+            var cinema = new Cinema
+            {
+                Address = "Address1",
+                Name = "Cinema1",
+                Type = DataAccess.Models.Enumerations.CinemaTypeEnum.Cinema,
+                Repertoires = new List<Repertoire> { rep }
+            };
+
+            context.Projections.Add(projection);
+            context.Repertoires.Add(rep);
+            context.Cinemas.Add(cinema);
+            context.SaveChanges();
         }
 
         public static void SeedUsers(UserManager<ApplicationUser> userManager)

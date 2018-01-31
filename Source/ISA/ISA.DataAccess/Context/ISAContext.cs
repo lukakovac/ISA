@@ -1,4 +1,5 @@
 ﻿using ISA.DataAccess.Models;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 
 namespace ISA.DataAccess.Context
@@ -8,8 +9,8 @@ namespace ISA.DataAccess.Context
         public ISAContext() : base()
         { }
 
-        public ISAContext(DbContextOptions<ISAContext> options) :
-            base(options)
+        public ISAContext(DbContextOptions<ISAContext> options)
+            : base(options)
         {
             var isCreated = Database.EnsureCreated();
         }
@@ -26,5 +27,8 @@ namespace ISA.DataAccess.Context
         {
             base.OnModelCreating(modelBuilder);
         }
+        public DbSet<Projection> Projections { get; set; }
+        public DbSet<Repertoire> Repertoires { get; set; }
+
     }
 }

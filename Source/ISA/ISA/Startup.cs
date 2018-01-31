@@ -86,12 +86,13 @@ namespace ISA
             IHostingEnvironment env,
             ILoggerFactory loggerFactory,
             UserManager<ApplicationUser> userManager,
-            RoleManager<IdentityRole> roleManager)
+            RoleManager<IdentityRole> roleManager,
+            ISAContext context)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
-            ApplicationDataInitializer.SeedData(userManager, roleManager);
+            ApplicationDataInitializer.SeedData(userManager, roleManager, context);
 
             if (env.IsDevelopment())
             {
