@@ -1,0 +1,38 @@
+﻿
+@{
+    ViewData["Title"] = "AddFriends";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model IEnumerable<FriendViewModel>
+
+<h2>AddFriends</h2>
+
+<div id="friends-table-div">
+
+    <table class="table table-responsive">
+        <caption>
+            Friends
+        </caption>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+        </tr>
+        @foreach (var friend in Model)
+        {
+            <tr>
+                <td>
+                    @friend.FirstName
+                </td>
+                <td>
+                    @friend.LastName
+                </td>
+                <td>
+                    <a asp-action="SendFriendRequest" asp-route-id="@friend.Id">Add friend</a>
+                </td>
+            </tr>
+        }
+
+    </table>
+
+</div>

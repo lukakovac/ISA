@@ -16,7 +16,7 @@ namespace ISA.DataAccess.Models
         [Column("Type")]
         public string TypeString
         {
-            get => Type.ToString("G");
+            get => Type.ToString();
             set => Type = value.ParseEnum<CinemaTypeEnum>();
         }
 

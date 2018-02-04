@@ -7,6 +7,6 @@ namespace ISA.Models.ManageViewModels
     {
         public string SelectedProvider { get; set; }
 
-        public ICollection<SelectListItem> Providers { get; set; }
+        public List<SelectListItem> Providers { get; set; }
     }
 }

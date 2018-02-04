@@ -13,6 +13,9 @@ using Microsoft.AspNetCore.Authentication;
 using ISA.Services.EmailService;
 using System.Collections.Generic;
 using Microsoft.Extensions.Configuration;
+using ISA.DataAccess.Models;
+using ISA.DataAccess.Context;
+using ISA.Data;
 
 namespace ISA.Controllers
 {
@@ -21,10 +24,12 @@ namespace ISA.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly ISAContext _context;
         private readonly IEmailService _emailSender;
         private readonly ISmsSender _smsSender;
         private readonly ILogger _logger;
         private readonly IConfiguration _configuration;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
         private string AdminMail => _configuration.GetSection("AppSettings").GetValue<string>("AdminMail")?.ToString();
 
@@ -34,7 +39,9 @@ namespace ISA.Controllers
             IEmailService emailSender,
             ISmsSender smsSender,
             ILoggerFactory loggerFactory,
-            IConfiguration appConfig)
+            IConfiguration appConfig,
+            ISAContext context,
+            RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -42,6 +49,8 @@ namespace ISA.Controllers
             _smsSender = smsSender;
             _logger = loggerFactory.CreateLogger<AccountController>();
             _configuration = appConfig;
+            _context = context;
+            _roleManager = roleManager;
         }
 
         //
@@ -127,18 +136,39 @@ namespace ISA.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                
+                var userProfile = new UserProfile
+                {
+                    EmailAddress = model.Email,
+                    City = model.City,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    TelephoneNr = model.TelephoneNr
+                };
 
                 // ONLY FOR TESTING PURPOSE!!! MADE BY LUKA
                 var userToDelete = _userManager.Users.FirstOrDefault();
                 if (!(userToDelete is null))
                 {
+                    var entity = _context.UserProfiles.SingleOrDefault(u => u.EmailAddress == userToDelete.Email);
+
+                    if (!(entity is null))
+                    {
+                        _context.UserProfiles.Remove(entity);
+                        _context.SaveChanges();
+                    }
+                    
                     await _userManager.DeleteAsync(userToDelete);
                 }
 
+                var profile = _context.UserProfiles.Add(userProfile);
+                _context.SaveChanges();
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, UserProfileId =  profile.Entity.Id};
+
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
-                {
+                { 
+                    await _userManager.AddToRoleAsync(user, Constants.ROLE_USER);
                     // For more information on how to enable account confirmaion and password reset please visit https://go.microsoft.com/fwlink/?LinkID=532713
                     // Send an email with this link
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
