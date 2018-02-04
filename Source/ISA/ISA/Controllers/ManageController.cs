@@ -9,30 +9,30 @@ using ISA.Models.ManageViewModels;
 using ISA.Services;
 using Microsoft.AspNetCore.Authentication;
 using ISA.Services.EmailService;
+using ISA.DataAccess.Context;
+using AutoMapper;
+using System.Collections.Generic;
+using ISA.DataAccess.Models.Enumerations;
+using AutoMapper.QueryableExtensions;
+using Microsoft.EntityFrameworkCore;
+using ISA.DataAccess.Models;
 
 namespace ISA.Controllers
 {
     [Authorize]
-    public class ManageController : Controller
+    public class ManageController : BaseController
     {
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly IEmailService _emailSender;
-        private readonly ISmsSender _smsSender;
-        private readonly ILogger _logger;
-
         public ManageController(
           UserManager<ApplicationUser> userManager,
           SignInManager<ApplicationUser> signInManager,
           IEmailService emailSender,
           ISmsSender smsSender,
-          ILoggerFactory loggerFactory)
+          ILogger<ManageController> logger,
+          ISAContext context,
+          IMapper mapper)
+            : base(userManager, signInManager, emailSender, smsSender, logger, context, mapper)
         {
-            _userManager = userManager;
-            _signInManager = signInManager;
-            _emailSender = emailSender;
-            _smsSender = smsSender;
-            _logger = loggerFactory.CreateLogger<ManageController>();
+
         }
 
         //
@@ -49,11 +49,9 @@ namespace ISA.Controllers
                 : message == ManageMessageId.RemovePhoneSuccess ? "Your phone number was removed."
                 : "";
 
-            var user = await GetCurrentUserAsync();
-            if (user == null)
-            {
-                return View("Error");
-            }
+            var user = CurrentUser;
+            if (user is null) return View("Error");
+
             var model = new IndexViewModel
             {
                 HasPassword = await _userManager.HasPasswordAsync(user),
@@ -62,6 +60,25 @@ namespace ISA.Controllers
                 Logins = await _userManager.GetLoginsAsync(user),
                 BrowserRemembered = await _signInManager.IsTwoFactorClientRememberedAsync(user)
             };
+
+            if (!(user.Profile is null))
+            {
+                _mapper.Map(user.Profile, model);
+
+                var friends = _context.FriendRequests
+                    .Include(x => x.Sender)
+                    .Include(x => x.Receiver)
+                    .Where(r => (r.SenderId == user.Profile.Id || r.ReceiverId == user.Profile.Id)
+                              && r.Status == FriendshipStatus.Accepted)
+                              .Select(r => r.SenderId == user.Profile.Id ? r.Receiver : r.Sender)
+                              .Distinct()
+                              .Select(_mapper.Map<FriendViewModel>)
+                              .ToList();
+
+                model.Friends = new List<FriendViewModel>();
+                model.Friends.AddRange(friends);
+            }
+
             return View(model);
         }
 
@@ -110,7 +127,7 @@ namespace ISA.Controllers
             }
             var code = await _userManager.GenerateChangePhoneNumberTokenAsync(user, model.PhoneNumber);
             await _smsSender.SendSmsAsync(model.PhoneNumber, "Your security code is: " + code);
-            return RedirectToAction(nameof(VerifyPhoneNumber), new {  model.PhoneNumber });
+            return RedirectToAction(nameof(VerifyPhoneNumber), new { model.PhoneNumber });
         }
 
         //
@@ -238,6 +255,143 @@ namespace ISA.Controllers
             return RedirectToAction(nameof(Index), new { Message = ManageMessageId.Error });
         }
 
+        //GET Manage/AddFriends
+        public async Task<IActionResult> AddFriends()
+        {
+            var user = await GetCurrentUserAsync();
+            if (user != null && user.UserProfileId.HasValue)
+            {
+                var profile = _context.UserProfiles.Find(user.UserProfileId.Value);
+
+                if (profile != null)
+                {
+
+                    var friends = _context.FriendRequests
+                        .Include(x => x.Sender)
+                        .Include(x => x.Receiver)
+                        .Where(r => (r.SenderId == profile.Id || r.ReceiverId == profile.Id)
+                                  && (r.Status == FriendshipStatus.Accepted
+                                        || r.Status == FriendshipStatus.Blocked
+                                        || r.Status == FriendshipStatus.Pending))
+                                  .Select(r => r.SenderId == profile.Id ? r.Receiver : r.Sender)
+                                  .Distinct()
+                                  .Select(x => x.Id)
+                                  .ToList();
+
+                    var nonFriends = _context.UserProfiles
+                        .Where(x => !friends.Any(f => f == x.Id) && x.Id != profile.Id)
+                        .Select(_mapper.Map<FriendViewModel>)
+                        .ToList();
+
+                    return View(nonFriends);
+                }
+            }
+
+            return Unauthorized();
+        }
+
+        public async Task<IActionResult> SendFriendRequest(int? id)
+        {
+            if (!id.HasValue)
+            {
+                return BadRequest("id");
+            }
+
+            var user = await GetCurrentUserAsync();
+            if (user != null && user.UserProfileId.HasValue)
+            {
+                var userProfile = _context.UserProfiles.Find(user.UserProfileId.Value);
+
+                if (userProfile != null)
+                {
+                    var friendship = _context.FriendRequests
+                        .Where(x => ((x.ReceiverId == userProfile.Id && x.SenderId == id)
+                        || (x.ReceiverId == id && x.SenderId == userProfile.Id))
+                                    && x.Status == FriendshipStatus.Accepted)
+                        .ToList();
+
+                    if (friendship.Any())
+                    {
+                        //TODO: add messages like for index
+                        // ALREADY_FRIENDS
+                        return RedirectToAction(nameof(AddFriends));
+                    }
+
+                    var user2 = _context.UserProfiles.Find(id.Value);
+                    if (user2 is null)
+                    {
+                        return BadRequest("userid");
+                    }
+
+                    _context.FriendRequests.Add(new FriendRequest
+                    {
+                        SenderId = userProfile.Id,
+                        ReceiverId = id.Value,
+                        Status = FriendshipStatus.Pending
+                    });
+                    _context.SaveChanges();
+                    return RedirectToAction(nameof(AddFriends));
+                }
+            }
+
+            return RedirectToAction(nameof(AddFriends));
+        }
+
+        public async Task<IActionResult> RemoveFriend(int? id)
+        {
+            if (!id.HasValue)
+            {
+                return BadRequest("ID");
+            }
+
+            var user = await GetCurrentUserAsync();
+            if (user != null && user.UserProfileId.HasValue)
+            {
+                var userProfile = _context.UserProfiles.Find(user.UserProfileId.Value);
+
+                if (userProfile != null)
+                {
+                    var friendship = _context.FriendRequests
+                        .Where(x => ((x.ReceiverId == userProfile.Id && x.SenderId == id)
+                        || (x.ReceiverId == id && x.SenderId == userProfile.Id))
+                                    && x.Status == FriendshipStatus.Accepted)
+                        .SingleOrDefault();
+
+                    if (friendship is null)
+                    {
+                        return NotFound("friendship");
+                    }
+
+                    friendship.Status = FriendshipStatus.Declined;
+                    _context.SaveChanges();
+                    return RedirectToAction(nameof(Index));
+                }
+                return NotFound("userProfile");
+            }
+            return NotFound("user");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> UpdateUserProfile([Bind("EmailAddress,FirstName,LastName,TelephoneNr,City")] IndexViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            if (CurrentUser?.Profile is null)
+            {
+                ModelState.AddModelError(string.Empty, $"UserProfile not found");
+                return RedirectToAction(nameof(Index), new { Message = ManageMessageId.Error });
+            }
+
+            _mapper.Map(model, CurrentUser.Profile);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+
+        }
+
         //
         // GET: /Manage/SetPassword
         [HttpGet]
@@ -360,10 +514,10 @@ namespace ISA.Controllers
             Error
         }
 
-        private Task<ApplicationUser> GetCurrentUserAsync()
-        {
-            return _userManager.GetUserAsync(HttpContext.User);
-        }
+        //private Task<ApplicationUser> GetCurrentUserAsync()
+        //{
+        //    return _userManager.GetUserAsync(HttpContext.User);
+        //}
 
         #endregion
     }

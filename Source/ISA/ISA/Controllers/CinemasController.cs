@@ -5,23 +5,44 @@ using Microsoft.EntityFrameworkCore;
 using ISA.DataAccess.Context;
 using ISA.DataAccess.Models;
 using Microsoft.AspNetCore.Authorization;
+using AutoMapper;
+using ISA.Models;
+using ISA.Services;
+using ISA.Services.EmailService;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Logging;
 
 namespace ISA.Controllers
 {
     [Authorize]
-    public class CinemasController : Controller
+    public class CinemasController : BaseController
     {
-        private readonly ISAContext _context;
-
-        public CinemasController(ISAContext context)
+        public CinemasController(
+                UserManager<ApplicationUser> userManager, 
+                SignInManager<ApplicationUser> signInManager, 
+                IEmailService emailSender, 
+                ISmsSender smsSender, 
+                ILogger<BaseController> logger, 
+                ISAContext context, 
+                IMapper mapper) 
+            : base(userManager, signInManager, emailSender, smsSender, logger, context, mapper)
         {
-            _context = context;
         }
 
+        //public CinemasController(ISAContext context)
+        //{
+        //    _context = context;
+        //}
+
         // GET: Cinemas
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string type)
         {
-            return View(await _context.Cinemas.ToListAsync());
+            ViewData["Title"] = "Theatres"; 
+            var result = string.IsNullOrEmpty(type)
+                ? await _context.Cinemas.ToListAsync()
+                : await _context.Cinemas.Where(x => x.TypeString == type).ToListAsync();
+
+            return View(result);
         }
 
         // GET: Cinemas/Details/5

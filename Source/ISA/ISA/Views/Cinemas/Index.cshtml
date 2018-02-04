@@ -1,29 +1,26 @@
-﻿@model IEnumerable<ISA.DataAccess.Models.Cinema>
-
-@{
+﻿@{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@using static ISA.Data.Constants;
+@using static ISA.Data.Expressions;
+@model List<ISA.DataAccess.Models.Cinema>
 
 <h2>Index</h2>
 
-@if (User.IsInRole("SuperAdmin"))
+
+@if (IsAnon(User))
 {
-    @await Html.PartialAsync("Index_SuperADmin");
-}
-else if (User.IsInRole("MovieAdmin"))
-{
-    @await Html.PartialAsync("Index_MovieAdmin");
-}
-else if (User.IsInRole("FunZoneAdmin"))
-{
-    @await Html.PartialAsync("Index_FunZoneAdmin");
-}
-else if (User.IsInRole("User"))
-{
-    @await Html.PartialAsync("Index_User");
+    @Html.PartialAsync($"Partials/Index/Anon")
 }
 else
 {
-    <p>User is not in any of known roles (but logged in none-the-less)</p>
+    foreach (var role in SYSTEM_ROLES)
+    {
+        if (User.IsInRole(role))
+        {
+            @await Html.PartialAsync($"Partials/Index/{role}")
+        }
+    }
 }
+

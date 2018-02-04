@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using ISA.Models;
-using Microsoft.AspNetCore.Hosting;
 
 namespace ISA.Data
 {
@@ -21,6 +20,6 @@ namespace ISA.Data
             // Add your customizations after calling base.OnModelCreating(builder);
         }
 
-        public DbSet<ISA.Models.TestModel> TestModel { get; set; }
+        public DbSet<TestModel> TestModel { get; set; }
     }
 }
