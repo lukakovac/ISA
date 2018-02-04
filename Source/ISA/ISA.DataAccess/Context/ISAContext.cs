@@ -11,15 +11,20 @@ namespace ISA.DataAccess.Context
         public ISAContext(DbContextOptions<ISAContext> options)
             : base(options)
         {
-            Database.EnsureCreated();
+            var isCreated = Database.EnsureCreated();
         }
 
         public DbSet<UserProfile> UserProfiles { get; set; }
         public DbSet<FriendRequest> FriendRequests { get; set; }
         public DbSet<Cinema> Cinemas { get; set; }
+
+        public DbSet<Bid> Bids { get; set; }
+
+        public DbSet<FunZone> FunZone { get; set; }
+
+        public DbSet<ThematicProps> ThematicProps { get; set; }
         public DbSet<Projection> Projections { get; set; }
         public DbSet<Repertoire> Repertoires { get; set; }
-
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -46,6 +51,9 @@ namespace ISA.DataAccess.Context
                 .HasMany(x => x.ReceivedRequests)
                 .WithOne(b => b.Receiver)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            base.OnModelCreating(modelBuilder);
         }
+
     }
 }

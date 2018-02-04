@@ -31,7 +31,8 @@ namespace ISA.Controllers
         private readonly IConfiguration _configuration;
         private readonly RoleManager<IdentityRole> _roleManager;
 
-        private string AdminMail => _configuration.GetSection("AppSettings").GetValue<string>("AdminMail")?.ToString();
+        private string AdminMail => _configuration.GetSection("Email").GetValue<string>("AdminMail")?.ToString();
+        private string AdminPassword => _configuration.GetSection("Email").GetValue<string>("AdminPassword")?.ToString();
 
         public AccountController(
             UserManager<ApplicationUser> userManager,
@@ -135,8 +136,7 @@ namespace ISA.Controllers
         {
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
-            {
-                
+            {                
                 var userProfile = new UserProfile
                 {
                     EmailAddress = model.Email,
@@ -259,6 +259,7 @@ namespace ISA.Controllers
             }
         }
 
+        public bool IsUserSignedIn { get; set; }
         //
         // POST: /Account/ExternalLoginConfirmation
         [HttpPost]
