@@ -1,0 +1,43 @@
+﻿@using ISA.Models.HomeViewModels;
+@model List<ReservationViewModel>
+
+
+<div id="history-table-div">
+
+    <table class="table table-responsive">
+        <caption>
+            History
+        </caption>
+        <tr>
+            <th>Date</th>
+            <th>Theatre</th>
+            <th>Projections</th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.EventDate
+                </td>
+                <td>
+                    <a asp-controller="Cinemas"
+                       asp-action="Details"
+                       asp-route-id="@item.Id"
+                       >@item.Theatre?.Name</a>
+                </td>
+                <td>
+                    <a asp-controller="Projections"
+                       asp-action="Details"
+                       asp-route-id="@item.Id">
+                        @item.Projection?.Name
+                    </a>
+                </td>
+            </tr>
+        }
+
+    </table>
+
+</div>
+
+
+

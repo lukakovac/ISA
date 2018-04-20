@@ -16,8 +16,8 @@ namespace ISA.DataAccess.Models
         [Column("Type")]
         public string ProjectionTypeString
         {
-            get => Type.ToString("G");
-            set => value.ParseEnum<ProjectionTypeEnum>();
+            get => Type.ToString();
+            set => Type = value.ParseEnum<ProjectionTypeEnum>();
         }
 
         [NotMapped]

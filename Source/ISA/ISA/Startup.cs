@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
 using ISA.Data;
 using ISA.DataAccess.Context;
 using ISA.Models;
@@ -11,6 +12,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using ISA.Common.Extensions;
+using Microsoft.AspNetCore.Mvc.Filters;
+using ISA.Filters;
 
 namespace ISA
 {
@@ -23,20 +27,45 @@ namespace ISA
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
+
             Configuration = builder.Build();
+            Environment = env;
         }
 
+        public IHostingEnvironment Environment { get; }
         public IConfigurationRoot Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAutoMapper();
             // Add framework services.
             services.AddMvc();
             services.AddDbContext<ISAContext>(cfg =>
             {
-                cfg.UseSqlServer(Configuration.GetConnectionString("IsaConnectionString"));
+                if (Environment.IsNemanjaRistic())
+                {
+                    cfg.UseInMemoryDatabase(databaseName: "InMemory");
+                }
+                else
+                {
+                    cfg.UseSqlServer(Configuration.GetConnectionString("IsaConnectionString"));
+                }
             });
+
+            services.AddDbContext<ApplicationDbContext>(cfg =>
+            {
+
+                if (Environment.IsNemanjaRistic())
+                {
+                    cfg.UseInMemoryDatabase(databaseName: "InMemorySecurity");
+                }
+                else
+                {
+                    cfg.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+                }
+            });
+
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
@@ -61,22 +90,23 @@ namespace ISA
                 options.User.RequireUniqueEmail = true;
             });
 
-            services.ConfigureApplicationCookie(options =>
-            {
-                // Cookie settings
-                options.Cookie.HttpOnly = true;
-                options.Cookie.Expiration = TimeSpan.FromDays(150);
-                options.LoginPath = "/Account/Login"; // If the LoginPath is not set here, ASP.NET Core will default to /Account/Login
-                options.LogoutPath = "/Account/Logout"; // If the LogoutPath is not set here, ASP.NET Core will default to /Account/Logout
-                options.AccessDeniedPath = "/Account/AccessDenied"; // If the AccessDeniedPath is not set here, ASP.NET Core will default to /Account/AccessDenied
-                options.SlidingExpiration = true;
-            });
+            //services.ConfigureApplicationCookie(options =>
+            //{
+            //    // Cookie settings
+            //    options.Cookie.HttpOnly = true;
+            //    options.Cookie.Expiration = TimeSpan.FromDays(150);
+            //    options.LoginPath = "/Account/Login"; // If the LoginPath is not set here, ASP.NET Core will default to /Account/Login
+            //    options.LogoutPath = "/Account/Logout"; // If the LogoutPath is not set here, ASP.NET Core will default to /Account/Logout
+            //    options.AccessDeniedPath = "/Account/AccessDenied"; // If the AccessDeniedPath is not set here, ASP.NET Core will default to /Account/AccessDenied
+            //    options.SlidingExpiration = true;
+            //});
 
             // Add application services.
             services.AddSingleton<IEmailConfiguration>(Configuration.GetSection("EmailConfiguration").Get<EmailConfiguration>());
 
             services.AddTransient<IEmailService, EmailService>();
             services.AddTransient<ISmsSender, SmsSender>();
+            services.AddScoped<CustomAuthFilter>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,5 +1,4 @@
 ﻿using ISA.DataAccess.Models;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 
 namespace ISA.DataAccess.Context
@@ -15,6 +14,8 @@ namespace ISA.DataAccess.Context
             var isCreated = Database.EnsureCreated();
         }
 
+        public DbSet<UserProfile> UserProfiles { get; set; }
+        public DbSet<FriendRequest> FriendRequests { get; set; }
         public DbSet<Cinema> Cinemas { get; set; }
 
         public DbSet<Bid> Bids { get; set; }
@@ -22,10 +23,34 @@ namespace ISA.DataAccess.Context
         public DbSet<FunZone> FunZone { get; set; }
 
         public DbSet<ThematicProps> ThematicProps { get; set; }
+        public DbSet<Projection> Projections { get; set; }
+        public DbSet<Repertoire> Repertoires { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<UserProfile>()
+                .HasIndex(x => x.EmailAddress)
+                .IsUnique();
+
+            modelBuilder.Entity<FriendRequest>()
+                .HasOne(x => x.Sender)
+                .WithMany(x => x.SentRequests)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<FriendRequest>()
+                .HasOne(x => x.Receiver)
+                .WithMany(x => x.ReceivedRequests)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<UserProfile>()
+                .HasMany(x => x.SentRequests)
+                .WithOne(b => b.Sender)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<UserProfile>()
+                .HasMany(x => x.ReceivedRequests)
+                .WithOne(b => b.Receiver)
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Cinema>()
                 .HasOne(p => p.FunZone)
@@ -42,9 +67,8 @@ namespace ISA.DataAccess.Context
             modelBuilder.Entity<ThematicProps>()
                 .HasOne(p => p.FunZone)
                 .WithMany(b => b.ThematicProps);
+            base.OnModelCreating(modelBuilder);
         }
-        public DbSet<Projection> Projections { get; set; }
-        public DbSet<Repertoire> Repertoires { get; set; }
 
     }
 }
