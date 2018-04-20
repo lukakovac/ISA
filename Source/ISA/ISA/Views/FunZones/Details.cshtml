@@ -1,0 +1,57 @@
+﻿@model ISA.DataAccess.Models.FunZone
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>FunZone</h4>
+    <hr />
+    <dl class="dl-horizontal"></dl>
+</div>
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Image
+                </th>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Description
+                </th>
+                <th>
+                    Price
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.ThematicProps)
+            {
+            <tr>
+                <td>
+                    
+                    @{
+                        var imagePath = item.Image;
+                        <img class="poster" src="@Url.Content(imagePath)" alt="Image"/>
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td width="40%">
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>

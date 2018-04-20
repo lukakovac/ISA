@@ -20,6 +20,8 @@ namespace ISA.DataAccess.Models
             set => Type = value.ParseEnum<CinemaTypeEnum>();
         }
 
+        public FunZone FunZone { get; set; }
+
         [NotMapped]
         public CinemaTypeEnum Type { get; set; }
         #endregion

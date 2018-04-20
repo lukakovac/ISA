@@ -37,7 +37,6 @@ namespace ISA
             {
                 cfg.UseSqlServer(Configuration.GetConnectionString("IsaConnectionString"));
             });
-
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()

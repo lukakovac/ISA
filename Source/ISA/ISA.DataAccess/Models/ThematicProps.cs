@@ -20,8 +20,8 @@ namespace ISA.DataAccess.Models
 
         public virtual ICollection<Reservation> Reservations { get; set; }
     
-        public Cinema Cinema { get; set; }
+        public FunZone FunZone { get; set; }
 
-        public Theater Theater { get; set; }
+        public string Image { get; set; }
     }
 }

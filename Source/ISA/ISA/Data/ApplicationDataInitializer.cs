@@ -35,7 +35,10 @@ namespace ISA.Data
                 ISAContext context
             )
         {
-            SeedEnumerations(context);
+            if(!context.Database.EnsureCreated())
+            {
+                SeedEnumerations(context);
+            }
             SeedRoles(roleManager);
             SeedUsers(userManager);
         }
@@ -50,6 +53,7 @@ namespace ISA.Data
                 Type = ProjectionTypeEnum.Movie
             };
 
+
             var rep = new Repertoire
             {
                 Projections = new List<Projection> { projection }
@@ -63,9 +67,56 @@ namespace ISA.Data
                 Repertoires = new List<Repertoire> { rep }
             };
 
+            var theater = new Theater()
+            {
+                Name = "Pozoriste Mladih"
+            };
+
+            var funZone = new FunZone()
+            {
+                Cinema = cinema
+            };
+
+            var funZoneTheater = new FunZone()
+            {
+                Theater = theater
+            };
+
+            var starWarsProps = new ThematicProps()
+            {
+                FunZone = funZone,
+                Description = "An almost brand new thematic prop for star wars! Used couple of times!",
+                Image = @"‪~/images/sw1.jpg",
+                Price = 1000,
+                Name = "Star wars gear"
+            };
+
+            var starTreckProp = new ThematicProps()
+            {
+                FunZone = funZone,
+                Description = "An almost brand new thematic prop for star treck! Used couple of times!",
+                Image = @"‪~/images/st1.jpg",
+                Price = 2000,
+                Name = "Star treck terminal"
+            };
+
+            var lotrProp = new ThematicProps()
+            {
+                FunZone = funZone,
+                Description = "An almost brand new thematic prop for LOTR! Used couple of times!",
+                Image = @"~/images/lordOfRings_ring.jpg",
+                Price = 200000,
+                Name = "LOTR ring on sales"
+            };
+
+            context.ThematicProps.Add(starWarsProps);
+            context.ThematicProps.Add(starTreckProp);
+            context.ThematicProps.Add(lotrProp);
             context.Projections.Add(projection);
             context.Repertoires.Add(rep);
             context.Cinemas.Add(cinema);
+            context.FunZone.Add(funZone);
+            context.FunZone.Add(funZoneTheater);
             context.SaveChanges();
         }
 

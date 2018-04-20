@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using ISA.Models;
 using Microsoft.AspNetCore.Hosting;
+using ISA.DataAccess.Models;
 
 namespace ISA.Data
 {
@@ -20,7 +21,5 @@ namespace ISA.Data
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
         }
-
-        public DbSet<ISA.Models.TestModel> TestModel { get; set; }
     }
 }
