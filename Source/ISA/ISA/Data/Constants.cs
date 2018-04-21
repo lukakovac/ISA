@@ -21,5 +21,10 @@ namespace ISA.Data
         {
             return !user.Identity.IsAuthenticated;
         }
+
+        public static bool IsFunZoneAdmin(ClaimsPrincipal user)
+        {
+            return user.Identity.IsAuthenticated && (user.IsInRole("FunZoneAdmin") || user.IsInRole("SuperAdmin"));
+        }
     }
 }

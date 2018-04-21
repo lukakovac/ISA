@@ -52,6 +52,16 @@ namespace ISA.DataAccess.Context
                 .WithOne(b => b.Receiver)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            modelBuilder.Entity<UserProfile>()
+                .HasMany(x => x.Reservations)
+                .WithOne(x => x.UserProfile);
+
+
+            modelBuilder.Entity<Bid>()
+                .HasOne(x => x.User)
+                .WithMany(x => x.Bids)
+                .OnDelete(DeleteBehavior.Cascade);
+
             modelBuilder.Entity<Cinema>()
                 .HasOne(p => p.FunZone)
                 .WithOne(i => i.Cinema)
@@ -67,6 +77,15 @@ namespace ISA.DataAccess.Context
             modelBuilder.Entity<ThematicProps>()
                 .HasOne(p => p.FunZone)
                 .WithMany(b => b.ThematicProps);
+
+            modelBuilder.Entity<ThematicProps>()
+                .HasOne(x => x.Publisher)
+                .WithMany(x => x.ThematicProps);
+
+            modelBuilder.Entity<ThematicProps>()
+                .HasMany(x => x.Reservations)
+                .WithOne(x => x.ThematicProp);
+
             base.OnModelCreating(modelBuilder);
         }
 

@@ -43,6 +43,39 @@ namespace ISA.Data
 
         private static void SeedEnumerations(ISAContext context)
         {
+            for (var i = 0; i < 3; i++)
+            {
+                var dummyUser = new UserProfile
+                {
+                    City = $"City{i}",
+                    EmailAddress = $"test{i}@test.mail",
+                    FirstName = $"FirstName{i}",
+                    LastName = $"LastName{i}",
+                    TelephoneNr = $"{i}{i}{i}{i}{i}{i}{i}"
+                };
+
+                if (context.UserProfiles.All(u => u.EmailAddress != dummyUser.EmailAddress))
+                {
+                    context.UserProfiles.Add(dummyUser);
+                }
+            }
+
+            context.SaveChanges();
+
+            var twoUsers = context.UserProfiles.Take(2);
+            var firstUser = twoUsers.First();
+            var secondUser = twoUsers.Skip(1).Take(1).First();
+
+            if (context.FriendRequests.All(r => r.SenderId != firstUser.Id && r.ReceiverId != secondUser.Id))
+            {
+                context.FriendRequests.Add(new FriendRequest
+                {
+                    Sender = firstUser,
+                    Receiver = secondUser,
+                    Status = FriendshipStatus.Pending
+                });
+            }
+
             var projection = new Projection
             {
                 Description = "desc",
@@ -86,7 +119,8 @@ namespace ISA.Data
                 Description = "An almost brand new thematic prop for star wars! Used couple of times!",
                 Image = @"‪~/images/sw1.jpg",
                 Price = 1000,
-                Name = "Star wars gear"
+                Name = "Star wars gear",
+                Publisher = firstUser
             };
 
             var starTreckProp = new ThematicProps()
@@ -115,39 +149,6 @@ namespace ISA.Data
             context.Cinemas.Add(cinema);
             context.FunZone.Add(funZone);
             context.FunZone.Add(funZoneTheater);
-
-            for (var i = 0; i < 3; i++)
-            {
-                var dummyUser = new UserProfile
-                {
-                    City = $"City{i}",
-                    EmailAddress = $"test{i}@test.mail",
-                    FirstName = $"FirstName{i}",
-                    LastName = $"LastName{i}",
-                    TelephoneNr = $"{i}{i}{i}{i}{i}{i}{i}"
-                };
-
-                if (context.UserProfiles.All(u => u.EmailAddress != dummyUser.EmailAddress))
-                {
-                    context.UserProfiles.Add(dummyUser);
-                }
-            }
-
-            context.SaveChanges();
-
-            var twoUsers = context.UserProfiles.Take(2);
-            var firstUser = twoUsers.First();
-            var secondUser = twoUsers.Skip(1).Take(1).First();
-
-            if (context.FriendRequests.All(r => r.SenderId != firstUser.Id && r.ReceiverId != secondUser.Id))
-            {
-                context.FriendRequests.Add(new FriendRequest
-                {
-                    Sender = firstUser,
-                    Receiver = secondUser,
-                    Status = FriendshipStatus.Pending
-                });
-            }
 
             context.SaveChanges();
 

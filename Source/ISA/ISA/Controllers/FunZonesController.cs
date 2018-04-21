@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ISA.DataAccess.Context;
 using ISA.DataAccess.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ISA.Controllers
 {
@@ -51,6 +52,7 @@ namespace ISA.Controllers
         }
 
         // GET: FunZones/Create
+        [Authorize(Roles = "FunZoneAdmin,SuperAdmin")]
         public IActionResult Create()
         {
             return View();
@@ -61,6 +63,7 @@ namespace ISA.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "FunZoneAdmin,SuperAdmin")]
         public async Task<IActionResult> Create([Bind("Id")] FunZone funZone)
         {
             if (ModelState.IsValid)
@@ -73,6 +76,7 @@ namespace ISA.Controllers
         }
 
         // GET: FunZones/Edit/5
+        [Authorize(Roles = "FunZoneAdmin,SuperAdmin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -93,6 +97,7 @@ namespace ISA.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "FunZoneAdmin,SuperAdmin")]
         public async Task<IActionResult> Edit(int id, [Bind("Id")] FunZone funZone)
         {
             if (id != funZone.Id)
@@ -124,6 +129,7 @@ namespace ISA.Controllers
         }
 
         // GET: FunZones/Delete/5
+        [Authorize(Roles = "FunZoneAdmin,SuperAdmin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -144,6 +150,7 @@ namespace ISA.Controllers
         // POST: FunZones/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "FunZoneAdmin,SuperAdmin")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var funZone = await _context.FunZone.SingleOrDefaultAsync(m => m.Id == id);

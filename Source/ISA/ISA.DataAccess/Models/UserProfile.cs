@@ -26,6 +26,13 @@ namespace ISA.DataAccess.Models
 
         [InverseProperty("Sender")]
         public virtual ICollection<FriendRequest> SentRequests { get; set; }
+
+        public virtual ICollection<Bid> Bids { get; set; }
+
+        public virtual ICollection<ThematicProps> ThematicProps { get; set; }
+
+        public virtual ICollection<Reservation> Reservations { get; set; }
+
     }
 
     public class FriendRequest : BaseEntity<int>

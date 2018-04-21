@@ -121,7 +121,7 @@ namespace ISA
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
-            ApplicationDataInitializer.SeedData(userManager, roleManager, context);
+            //ApplicationDataInitializer.SeedData(userManager, roleManager, context);
 
             if (env.IsDevelopment())
             {

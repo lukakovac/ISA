@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<ISA.DataAccess.Models.FunZone>
+@using static ISA.Data.Expressions;
 
 @{
     ViewData["Title"] = "Index";
@@ -33,9 +34,12 @@
                     }
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Visit</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    @if (IsFunZoneAdmin(User))
+                    {
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit | </a>
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete | </a>
+                    }
+                    <a asp-action="Details" asp-route-id="@item.Id">Visit</a>
                 </td>
             </tr>
         }

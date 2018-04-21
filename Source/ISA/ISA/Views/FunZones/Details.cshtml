@@ -28,6 +28,12 @@
                 <th>
                     Price
                 </th>
+                <th>
+                    Bid until
+                </th>
+                <th>
+                    
+                </th>
             </tr>
         </thead>
         <tbody>
@@ -35,11 +41,10 @@
             {
             <tr>
                 <td>
-                    
-                    @{
-                        var imagePath = item.Image;
-                        <img class="poster" src="@Url.Content(imagePath)" alt="Image"/>
-                    }
+                @{
+                    var imagePath = item.Image;
+                    <img class="poster" src="@Url.Content(imagePath)" alt="Image" height="100" width="100" />
+                }
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Name)
@@ -50,8 +55,20 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Price)
                 </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ValidTo)
+                </td>
+                <td>
+                    <a asp-controller="Bids" asp-action="Create" asp-route-propId="@item.Id">Bid</a>
+                </td>
             </tr>
             }
         </tbody>
     </table>
 </div>
+
+<script>
+    function buttonclick() {
+        alert('Cao Bobe');
+    }
+</script>
